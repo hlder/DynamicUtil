@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PlugA</string>
+    <string name="pluba_main_text">你现在看到的是插件A</string>
+    <string name="pluba_main_btn_dialog">点我弹出一个dialog</string>
+    <string name="pluba_main_btn_start">点我启动TestActivity</string>
+
+    <string name="pluba_main_msg_dialog">我是一个alert弹框</string>
+</resources>
