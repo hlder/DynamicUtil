@@ -2,6 +2,7 @@ package com.dynamicutils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import dalvik.system.DexClassLoader;
  */
 public class DynamicChildActivity extends AppCompatActivity{
     DynamicParantActivity dynamicParantActivity;
+
+    String apkPath="";
 
     //加载dex
     public Class<?> getDynamicClass(String apkPath,String className){
@@ -95,9 +98,8 @@ public class DynamicChildActivity extends AppCompatActivity{
         }
         return mResources;
     }
-
     private void onDynamicCreate(Bundle savedInstanceState){
-        String apkPath=getIntent().getStringExtra("DynamicApkPath");//apk的位置
+        apkPath=getIntent().getStringExtra("DynamicApkPath");//apk的位置
         String className=getIntent().getStringExtra("DynamicActivityClassName");//需要加载activity类名,getClassName
 
         String testClassName=getIntent().getStringExtra("testClassName");//测试加载类
@@ -200,4 +202,9 @@ public class DynamicChildActivity extends AppCompatActivity{
         return flag;
     }
 
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int mode) {
+        return super.getSharedPreferences(apkPath+"-"+name, mode);
+    }
 }

@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import org.xmlpull.v1.XmlPullParser;
 
 public class DynamicLayoutInflater extends LayoutInflater {
-    LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
+    private Resources mResources;
 
     public DynamicLayoutInflater(Context context) {
         super(context);
@@ -26,7 +27,6 @@ public class DynamicLayoutInflater extends LayoutInflater {
     public void setLayoutInflater(LayoutInflater layoutInflater) {
         this.layoutInflater = layoutInflater;
     }
-    private Resources mResources;
 
     public void setmResources(Resources mResources) {
         this.mResources = mResources;
