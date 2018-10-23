@@ -3,6 +3,7 @@ package com.hld.testDn;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.View;
 
 import com.dynamicutils.DynamicUtil;
 
@@ -17,8 +18,15 @@ public class MainActivity extends AppCompatActivity {
 
 //        PermissionUtils.verifyStoragePermissions(this);
 
-        DynamicUtil.startDynamicActivity(this,"/sdcard/HldSimpleApps/SearchBaidu.apk","com.hld.searchbd.MainActivity");
 
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DynamicUtil.startDynamicActivity(MainActivity.this,
+                        "/sdcard/HldSimpleApps/SearchBaidu.apk",
+                        "com.hld.searchbd.MainActivity");
+            }
+        });
 //        DynamicUtil.startDynamicActivity(this,"/data/data/com.hld.testDn/files/a.apk","pluga.hld.com.pluga.MainActivity");
     }
 }

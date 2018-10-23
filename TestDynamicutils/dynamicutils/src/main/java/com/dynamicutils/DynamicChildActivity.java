@@ -1,5 +1,6 @@
 package com.dynamicutils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,8 +9,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import java.io.File;
@@ -27,7 +26,7 @@ import dalvik.system.DexClassLoader;
  * intent.putExtra("DynamicActivityClassName","testproject.hld.com.testproject2.TestActivity");
  * startActivity(intent);
  */
-public class DynamicChildActivity extends AppCompatActivity{
+public class DynamicChildActivity extends Activity{
     DynamicParantActivity dynamicParantActivity;
 
     String apkPath="";
@@ -50,12 +49,29 @@ public class DynamicChildActivity extends AppCompatActivity{
 
     Resources mResources=null;
     Resources.Theme mTheme;
+    private AssetManager assetManager;
 
     public Resources getmResources() {
-        if(mResources==null){
-            return super.getResources();
+        if(mResources!=null){
+            return mResources;
         }
-        return mResources;
+        return super.getResources();
+    }
+
+    @Override
+    public Resources.Theme getTheme() {
+        if(mTheme!=null){
+            return mTheme;
+        }
+        return super.getTheme();
+    }
+
+    @Override
+    public AssetManager getAssets() {
+        if(assetManager!=null){
+            return assetManager;
+        }
+        return super.getAssets();
     }
 
     void initResources(String apkPath){
@@ -75,18 +91,12 @@ public class DynamicChildActivity extends AppCompatActivity{
         }
     }
 
-    @Override
-    public Context getBaseContext() {
-        return super.getBaseContext();
-    }
-
     protected Resources loadResources(String apkPath) {
         if(mResources==null){
             try {
-                AssetManager assetManager = AssetManager.class.newInstance();
+                assetManager = AssetManager.class.newInstance();
                 Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
                 addAssetPath.invoke(assetManager, apkPath);
-
 
                 Resources superRes = super.getResources();
                 mResources = new Resources(assetManager, superRes.getDisplayMetrics(),superRes.getConfiguration());
