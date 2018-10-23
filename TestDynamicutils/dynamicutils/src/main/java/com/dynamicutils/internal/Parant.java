@@ -4,6 +4,7 @@ import android.app.SharedElementCallback;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -79,4 +80,6 @@ public interface Parant {
     void onActivityResult(int requestCode, int resultCode, Intent data);
 
     boolean onKeyUp(int keyCode, KeyEvent event);
+    void finish();
+    SharedPreferences getSharedPreferences(String name, int mode);
 }

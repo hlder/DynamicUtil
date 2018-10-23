@@ -4,6 +4,7 @@ import android.app.SharedElementCallback;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +32,6 @@ import com.dynamicutils.internal.Parant;
  * 其他一切OK
  * @author hld
  */
-//public class DynamicParantActivity extends AppCompatActivity{
 public class DynamicParantActivity implements Parant {
 
     DynamicChildActivity DynamicActivity;
@@ -52,7 +52,12 @@ public class DynamicParantActivity implements Parant {
         }
         return null;
     }
-
+    public DynamicChildActivity getActivity(){
+        if(DynamicActivity!=null){
+            return DynamicActivity;
+        }
+        return null;
+    }
 
     @Override
     public Resources getResources() {
@@ -82,6 +87,7 @@ public class DynamicParantActivity implements Parant {
         if(DynamicActivity!=null){
             if(dynamicLayoutInflater==null){
                 dynamicLayoutInflater=new DynamicLayoutInflater(DynamicActivity);
+                dynamicLayoutInflater.setLayoutInflater(DynamicActivity.getLayoutInflater());
             }
             return dynamicLayoutInflater;
         }else{
@@ -234,7 +240,25 @@ public class DynamicParantActivity implements Parant {
         if(DynamicActivity==null){
             return;
         }
+
+        String action=intent.getAction();
+        if(action!=null&&!"".equals(action)){
+            if(action.equals(Intent.ACTION_VIEW)||action.equals(Intent.ACTION_MAIN)||action.equals(Intent.ACTION_ATTACH_DATA)||action.equals(Intent.ACTION_EDIT)
+                    ||action.equals(Intent.ACTION_PICK)||action.equals(Intent.ACTION_CHOOSER)||action.equals(Intent.ACTION_GET_CONTENT)||action.equals(Intent.ACTION_DIAL)
+                    ||action.equals(Intent.ACTION_SEND)||action.equals(Intent.ACTION_SENDTO)||action.equals(Intent.ACTION_ANSWER)
+                    ||action.equals(Intent.ACTION_INSERT)||action.equals(Intent.ACTION_DELETE)||action.equals(Intent.ACTION_RUN)
+                    ||action.equals(Intent.ACTION_SYNC)||action.equals(Intent.ACTION_PICK_ACTIVITY)||action.equals(Intent.ACTION_SEARCH)
+                    ||action.equals(Intent.ACTION_WEB_SEARCH)||action.equals(Intent.ACTION_FACTORY_TEST)){
+                return;
+            }
+        }
+
+
         String className=intent.getComponent().getClassName();
+        if("".equals(className)||className==null){
+            return;
+        }
+
         intent.putExtra("DynamicApkPath",""+apkPath);
         intent.putExtra("DynamicActivityClassName",className);
         intent.putExtra("testClassName",className);
@@ -245,7 +269,13 @@ public class DynamicParantActivity implements Parant {
 
 
 
+    @Override
+    public void finish() {
+        if(DynamicActivity!=null){
+            DynamicActivity.finish();
+        }
 
+    }
 
 
     @Override
@@ -259,6 +289,15 @@ public class DynamicParantActivity implements Parant {
         return DynamicActivity.startForegroundService(service);
     }
 
+
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int mode) {
+        if(DynamicActivity!=null){
+            return DynamicActivity.getSharedPreferences(name,mode);
+        }
+        return null;
+    }
 
 
 
