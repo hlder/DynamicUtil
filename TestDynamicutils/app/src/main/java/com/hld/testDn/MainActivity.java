@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DynamicUtil.startDynamicActivity(MainActivity.this,
                         "/sdcard/HldSimpleApps/SearchBaidu.apk",
-                        "com.hld.searchbd.MainActivity");
+                        "com.hld.searchbd.TestActivity");
             }
         });
 //        DynamicUtil.startDynamicActivity(this,"/data/data/com.hld.testDn/files/a.apk","pluga.hld.com.pluga.MainActivity");

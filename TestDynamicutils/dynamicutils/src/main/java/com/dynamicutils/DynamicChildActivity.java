@@ -101,8 +101,32 @@ public class DynamicChildActivity extends Activity{
                 Resources superRes = super.getResources();
                 mResources = new Resources(assetManager, superRes.getDisplayMetrics(),superRes.getConfiguration());
 
+                Resources.Theme superTheme=super.getTheme();
+//                Resources.Theme superTheme=superRes.newTheme();
+//                superTheme.setTo(super.getTheme());
+
                 mTheme = mResources.newTheme();
-                mTheme.setTo(getBaseContext().getTheme());
+                mTheme.setTo(superTheme);
+
+//                TypedValue typedValue = new TypedValue();
+//                mTheme.resolveAttribute(mAttrResId, typedValue, true);
+
+//                for(int i=0;i<AppCompatTheme.length;i++){
+//                    mTheme.applyStyle(AppCompatTheme[i],true);
+//                }
+
+
+                //====================================================================================================
+
+//                TypedArray superA=superTheme.obtainStyledAttributes(android.support.v7.appcompat.R.styleable.AppCompatTheme);
+//                TypedArray a=mTheme.obtainStyledAttributes(android.support.v7.appcompat.R.styleable.AppCompatTheme);
+//
+//
+//                Log.d("dddd","superA:"+superA);
+
+                //====================================================================================================
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -125,7 +149,6 @@ public class DynamicChildActivity extends Activity{
                 loadResources(apkPath);
                 initResources(apkPath);
 
-                dynamicParantActivity.onCreate(savedInstanceState);
             }  catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
@@ -138,7 +161,6 @@ public class DynamicChildActivity extends Activity{
                 dynamicParantActivity= (DynamicParantActivity) cls.newInstance();
                 dynamicParantActivity.setDynamicActivity(this);
 
-                dynamicParantActivity.onCreate(savedInstanceState);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -152,14 +174,16 @@ public class DynamicChildActivity extends Activity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         onDynamicCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+        dynamicParantActivity.onCreate(savedInstanceState);
 
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
         onDynamicCreate(savedInstanceState);
+        super.onCreate(savedInstanceState, persistentState);
+        dynamicParantActivity.onCreate(savedInstanceState);
     }
 
     @Override
