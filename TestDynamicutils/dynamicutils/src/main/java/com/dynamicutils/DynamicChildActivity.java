@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.view.Window;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -101,30 +102,12 @@ public class DynamicChildActivity extends Activity{
                 Resources superRes = super.getResources();
                 mResources = new Resources(assetManager, superRes.getDisplayMetrics(),superRes.getConfiguration());
 
-                Resources.Theme superTheme=super.getTheme();
-//                Resources.Theme superTheme=superRes.newTheme();
-//                superTheme.setTo(super.getTheme());
+                Resources.Theme superTheme=getBaseContext().getTheme();
 
                 mTheme = mResources.newTheme();
                 mTheme.setTo(superTheme);
 
-//                TypedValue typedValue = new TypedValue();
-//                mTheme.resolveAttribute(mAttrResId, typedValue, true);
-
-//                for(int i=0;i<AppCompatTheme.length;i++){
-//                    mTheme.applyStyle(AppCompatTheme[i],true);
-//                }
-
-
-                //====================================================================================================
-
-//                TypedArray superA=superTheme.obtainStyledAttributes(android.support.v7.appcompat.R.styleable.AppCompatTheme);
-//                TypedArray a=mTheme.obtainStyledAttributes(android.support.v7.appcompat.R.styleable.AppCompatTheme);
-//
-//
-//                Log.d("dddd","superA:"+superA);
-
-                //====================================================================================================
+//                mTheme.applyStyle(R.style.AppTheme, true);
 
 
             } catch (Exception e) {
@@ -169,21 +152,29 @@ public class DynamicChildActivity extends Activity{
                 e.printStackTrace();
             }
         }
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         onDynamicCreate(savedInstanceState);
+
         super.onCreate(savedInstanceState);
+
         dynamicParantActivity.onCreate(savedInstanceState);
 
     }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+
         onDynamicCreate(savedInstanceState);
+
         super.onCreate(savedInstanceState, persistentState);
+
         dynamicParantActivity.onCreate(savedInstanceState);
+
     }
 
     @Override

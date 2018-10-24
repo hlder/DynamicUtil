@@ -17,13 +17,17 @@ public class MainActivity extends AppCompatActivity {
         //启动插件A中的MainActivity
 
 //        PermissionUtils.verifyStoragePermissions(this);
-
+        DynamicUtil.startDynamicActivity(MainActivity.this,
+                "/sdcard/HldSimpleApps/SearchBaidu.apk",
+                        "com.hld.searchbd.MainActivity");
+//                "com.hld.searchbd.TestActivity");
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DynamicUtil.startDynamicActivity(MainActivity.this,
                         "/sdcard/HldSimpleApps/SearchBaidu.apk",
+//                        "com.hld.searchbd.MainActivity");
                         "com.hld.searchbd.TestActivity");
             }
         });
