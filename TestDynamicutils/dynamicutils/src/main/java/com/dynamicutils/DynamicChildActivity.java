@@ -232,7 +232,9 @@ public class DynamicChildActivity extends Activity{
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
         String tem=apkPath;
-        tem=tem.replaceAll("/","").replaceAll(".","");
+        if(tem!=null&&!"".equals(tem)){
+            tem=tem.replaceAll("/","").replaceAll(".","");
+        }
         return super.getSharedPreferences(tem+"_"+name, mode);
     }
 }
